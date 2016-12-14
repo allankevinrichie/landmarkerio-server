@@ -99,9 +99,9 @@ def cache_image(cache_dir, path, asset_id):
 
 def _cache_image_for_id(cache_dir, asset_id, img):
     asset_cache_dir = p.join(cache_dir, asset_id)
-    image_info_path = p.join(asset_cache_dir, CacheFile.image)
-    texture_path = p.join(asset_cache_dir, CacheFile.texture)
-    thumbnail_path = p.join(asset_cache_dir, CacheFile.thumbnail)
+    image_info_path = p.join(asset_cache_dir, CacheFile.image.value)
+    texture_path = p.join(asset_cache_dir, CacheFile.texture.value)
+    thumbnail_path = p.join(asset_cache_dir, CacheFile.thumbnail.value)
     img_path = img.path
 
     # WebGL only allows textures of maximum dimension 4096
@@ -143,8 +143,8 @@ def cache_mesh(cache_dir, path, asset_id):
 
 def _cache_mesh_for_id(cache_dir, asset_id, mesh):
     asset_cache_dir = p.join(cache_dir, asset_id)
-    mesh_tmp_path = p.join(asset_cache_dir, CacheFile.mesh_tmp)
-    mesh_path = p.join(asset_cache_dir, CacheFile.mesh)
+    mesh_tmp_path = p.join(asset_cache_dir, CacheFile.mesh_tmp.value)
+    mesh_path = p.join(asset_cache_dir, CacheFile.mesh.value)
     # store out the raw file
     _export_raw_mesh(mesh_tmp_path, mesh)
     # compress the raw and remove the uncompressed

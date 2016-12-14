@@ -183,12 +183,12 @@ class FileTemplateAdapter(TemplateAdapter):
 
     def handle_old_templates(self, upgrade_templates=False):
         old_ids = [t.stem for t
-                   in self.template_dir.glob('*' + FileExt.old_template)]
+                   in self.template_dir.glob('*' + FileExt.old_template.value)]
         if len(old_ids) > 0 and upgrade_templates:
             print "Converting {} old style templates".format(len(old_ids))
             for lm_id in old_ids:
                 fp = safe_join(str(self.template_dir),
-                               lm_id + FileExt.old_template)
+                               lm_id + FileExt.old_template.value)
                 convert_legacy_template(fp)
 
         elif len(old_ids) > 0:
@@ -209,10 +209,10 @@ class FileTemplateAdapter(TemplateAdapter):
         return [t.stem for t in self.template_paths()]
 
     def template_paths(self):
-        return self.template_dir.glob('*' + FileExt.template)
+        return self.template_dir.glob('*' + FileExt.template.value)
 
     def load_template(self, lm_id):
-        fp = safe_join(str(self.template_dir), lm_id + FileExt.template)
+        fp = safe_join(str(self.template_dir), lm_id + FileExt.template.value)
         return load_template(fp, self.n_dims)
 
 

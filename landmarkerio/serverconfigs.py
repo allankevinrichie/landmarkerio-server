@@ -14,7 +14,7 @@ def serve_with_cherrypy(app, port=5000, public=False):
     import cherrypy
     # Mount the WSGI callable object (app) on the desired endpoint (e.g.
     # /api/v1)
-    cherrypy.tree.graft(app, Server.endpoint)
+    cherrypy.tree.graft(app, Server.endpoint.value)
     update_dict = {
         'server.socket_port': port,
     }

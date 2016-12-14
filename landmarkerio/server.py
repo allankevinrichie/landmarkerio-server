@@ -27,10 +27,10 @@ def safe_send_file(mimetype, path, fail_message, gzip=False):
         print(e)
         return abort(404, message=fail_message)
 
-image_file = partial(safe_send_file, Mimetype.jpeg)
-json_file = partial(safe_send_file, Mimetype.json)
-gzip_json_file = partial(safe_send_file, Mimetype.json, gzip=True)
-binary_file = partial(safe_send_file, Mimetype.binary)
+image_file = partial(safe_send_file, Mimetype.jpeg.value)
+json_file = partial(safe_send_file, Mimetype.json.value)
+gzip_json_file = partial(safe_send_file, Mimetype.json.value, gzip=True)
+binary_file = partial(safe_send_file, Mimetype.binary.value)
 gzip_binary_file = partial(binary_file, gzip=True)
 
 
@@ -93,7 +93,7 @@ def lmio_api(dev=False, username=None, password=None):
     # 1. configure CORS decorator
 
     cors_dict = {
-        'allowed_origins': Server.allowed_origins,
+        'allowed_origins': Server.allowed_origins.value,
         'headers': ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
         'methods': ['HEAD', 'GET', 'POST', 'PATCH', 'PUT', 'OPTIONS', 'DELETE'],
         'credentials': True
@@ -131,7 +131,7 @@ def add_mode_endpoint(api, mode):
         def get(self):
             return mode
 
-    api.add_resource(Mode, url(Endpoints.mode))
+    api.add_resource(Mode, url(Endpoints.mode.value))
 
 
 def add_lm_endpoints(api, lm_adapter, template_adapter):
@@ -186,7 +186,7 @@ def add_lm_endpoints(api, lm_adapter, template_adapter):
         def get(self, asset_id):
             return lm_adapter.lm_ids(asset_id)
 
-    lm_url = partial(url, Endpoints.landmarks)
+    lm_url = partial(url, Endpoints.landmarks.value)
     api.add_resource(LandmarkList, lm_url())
     api.add_resource(LandmarkListForId, asset(lm_url)())
     api.add_resource(Landmark, asset(lm_url)('<string:lm_id>'))
@@ -205,7 +205,7 @@ def add_template_endpoints(api, adapter):
         def get(self):
             return adapter.template_ids()
 
-    templates_url = partial(url, Endpoints.templates)
+    templates_url = partial(url, Endpoints.templates.value)
     api.add_resource(TemplateList, templates_url())
     api.add_resource(Template, templates_url('<string:lm_id>'))
 
@@ -223,7 +223,7 @@ def add_collection_endpoints(api, adapter):
         def get(self):
             return adapter.collection_ids()
 
-    collections_url = partial(url, Endpoints.collections)
+    collections_url = partial(url, Endpoints.collections.value)
     api.add_resource(CollectionList, collections_url())
     api.add_resource(Collection, collections_url('<string:collection_id>'))
 
@@ -259,9 +259,9 @@ def add_image_endpoints(api, adapter):
             err = "{} does not have a thumbnail".format(asset_id)
             return image_file(adapter.thumbnail_file(asset_id), err)
 
-    image_url = partial(url, Endpoints.images)
-    texture_url = partial(url, Endpoints.textures)
-    thumbnail_url = partial(url, Endpoints.thumbnail)
+    image_url = partial(url, Endpoints.images.value)
+    texture_url = partial(url, Endpoints.textures.value)
+    thumbnail_url = partial(url, Endpoints.thumbnail.value)
 
     api.add_resource(ImageList, image_url())
 
@@ -282,7 +282,7 @@ def add_mesh_endpoints(api, adapter):
         def get(self):
             return adapter.asset_ids()
 
-    mesh_url = partial(url, Endpoints.meshes)
+    mesh_url = partial(url, Endpoints.meshes.value)
     mesh_asset_url = asset(mesh_url)
 
     api.add_resource(MeshList, mesh_url())

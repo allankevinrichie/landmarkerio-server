@@ -48,16 +48,16 @@ class ImageCacheAdapter(CacheAdapter, ImageAdapter):
         CacheAdapter.__init__(self, cache_dir)
         self._image_asset_ids = [a.parent.name
                                  for a in self.cache_dir.glob(os.path.join('*',
-                                                              CacheFile.image))
+                                                              CacheFile.image.value))
                                  if a.parent.parent == self.cache_dir]
 
     def texture_file(self, asset_id):
         return reduce(safe_join, (str(self.cache_dir),
-                                  asset_id, CacheFile.texture))
+                                  asset_id, CacheFile.texture.value))
 
     def thumbnail_file(self, asset_id):
         return reduce(safe_join,
-                      (str(self.cache_dir), asset_id, CacheFile.thumbnail))
+                      (str(self.cache_dir), asset_id, CacheFile.thumbnail.value))
 
     def asset_ids(self):
         return self._image_asset_ids
@@ -69,12 +69,12 @@ class MeshCacheAdapter(CacheAdapter, MeshAdapter):
         CacheAdapter.__init__(self, cache_dir)
         self._mesh_asset_ids = [a.parent.name
                                 for a in self.cache_dir.glob(os.path.join('*',
-                                                             CacheFile.mesh))
+                                                             CacheFile.mesh.value))
                                 if a.parent.parent == self.cache_dir]
 
     def mesh(self, asset_id):
         return reduce(safe_join, (str(self.cache_dir), asset_id,
-                                  CacheFile.mesh))
+                                  CacheFile.mesh.value))
 
     def asset_ids(self):
         return self._mesh_asset_ids

@@ -81,7 +81,7 @@ class SeparateDirFileLmAdapter(FileLmAdapter):
 
     def lm_fp(self, asset_id, lm_id):
         # where a landmark should exist
-        return safe_join(safe_join(self.lm_dir, asset_id), lm_id + FileExt.lm)
+        return safe_join(safe_join(self.lm_dir, asset_id), lm_id + FileExt.lm.value)
 
     def lm_ids(self, asset_id):
         r"""
@@ -110,7 +110,7 @@ class SeparateDirFileLmAdapter(FileLmAdapter):
             asset_id = '*'
         g = glob.glob(p.join(safe_join(self.lm_dir, asset_id), '*'))
         return filter(lambda f: p.isfile(f) and
-                                p.splitext(f)[-1] == FileExt.lm, g)
+                                p.splitext(f)[-1] == FileExt.lm.value, g)
 
     def save_lm(self, asset_id, lm_id, lm_json):
         r"""
@@ -151,4 +151,4 @@ class InplaceFileLmAdapter(FileLmAdapter):
 
     def _lm_path_for_asset_id(self, asset_id):
         asset_path = Path(self.ids_to_paths[asset_id])
-        return asset_path.with_suffix(FileExt.lm)
+        return asset_path.with_suffix(FileExt.lm.value)
